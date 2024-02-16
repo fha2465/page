@@ -19,14 +19,8 @@ def decrypt(cipher_text, key):
     return plain_text.rstrip(b"\0")
 
 def main():
-    # Read server IP from file
-    try:
-        with open('ip_address.txt', 'r') as file:
-            server_ip = file.read().strip()
-    except FileNotFoundError:
-        print("Error reading IP address file: File not found")
-        return
-
+    # Specify server IP
+    server_ip = "192.168.100.228"
     server_port = 12345
     encryption_key = get_random_bytes(16)  # Generate a random 16-byte encryption key
 

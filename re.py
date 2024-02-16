@@ -1,7 +1,6 @@
 import socket
 from Crypto.Cipher import AES
 from Crypto.Random import get_random_bytes
-import configparser
 
 def pad(data):
     padding_length = AES.block_size - (len(data) % AES.block_size)
@@ -17,13 +16,12 @@ def decrypt(cipher_text, key):
     iv = cipher_text[:AES.block_size]
     cipher = AES.new(key, AES.MODE_CBC, iv)
     plain_text = cipher.decrypt(cipher_text[AES.block_size:])
-    return plain_text[:-plain_text[-1]]
+    return plain_text.rstrip(b"\0")
 
 def main():
-    # Read server IP from configuration file
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    server_ip = config['server']['ip']
+    # Read server IP from file
+    with open('ip_address.txt', 'r') as file:
+        server_ip = file.read().strip()
 
     server_port = 12345
     encryption_key = get_random_bytes(16)  # Generate a random 16-byte encryption key

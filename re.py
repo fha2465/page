@@ -19,10 +19,9 @@ def decrypt(cipher_text, key):
     return plain_text.rstrip(b"\0")
 
 def main():
-    # Specify server IP
-    server_ip = "192.168.100.228"
+    server_ip = '192.168.100.228'  # Replace with your server's IP address
     server_port = 12345
-    encryption_key = get_random_bytes(16)  # Generate a random 16-byte encryption key
+    encryption_key = b'Sixteen byte key'  # Replace with your encryption key
 
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 

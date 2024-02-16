@@ -4,8 +4,7 @@ from Crypto.Random import get_random_bytes
 
 def pad(data):
     padding_length = AES.block_size - (len(data) % AES.block_size)
-    padding_char = chr(padding_length).encode()
-    return data + padding_length * padding_char
+    return data + padding_length * chr(padding_length).encode()
 
 def encrypt(data, key):
     cipher = AES.new(key, AES.MODE_CBC)
@@ -16,7 +15,7 @@ def decrypt(cipher_text, key):
     iv = cipher_text[:AES.block_size]
     cipher = AES.new(key, AES.MODE_CBC, iv)
     plain_text = cipher.decrypt(cipher_text[AES.block_size:])
-    return plain_text.rstrip(b"\0")
+    return plain_text[:-plain_text[-1]]
 
 def main():
     server_ip = '192.168.100.228'  # Replace with your server's IP address
